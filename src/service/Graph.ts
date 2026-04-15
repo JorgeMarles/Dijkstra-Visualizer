@@ -106,8 +106,15 @@ export class Graph {
     }
 
     private markShortestTree(predecessors: Map<number, number | null>) {
+        const distances = this.dijkstraState?.distances;
         for (const [nodeId, predecessor] of predecessors.entries()) {
             if (predecessor === null) {
+                continue;
+            }
+
+            // Only mark edges for reachable nodes
+            const distance = distances?.get(nodeId) ?? Number.POSITIVE_INFINITY;
+            if (!Number.isFinite(distance)) {
                 continue;
             }
 
@@ -250,19 +257,18 @@ export class Graph {
 
         const currentId = this.pickMinUnvisited(state.distances, state.unvisited);
         if (currentId === null) {
+            if (state.targetId === null) {
+                this.markShortestTree(state.predecessors);
+                state.message = state.unvisited.size === 0 ? 'Distancias minimas calculadas para todos los nodos' : 'Distancias minimas calculadas para nodos alcanzables';
+            } else {
+                state.message = 'No existe camino al destino';
+            }
             state.running = false;
             state.finished = true;
-            state.message = 'No hay nodos pendientes';
             return;
         }
 
         const currentDistance = state.distances.get(currentId) ?? Number.POSITIVE_INFINITY;
-        if (!Number.isFinite(currentDistance)) {
-            state.running = false;
-            state.finished = true;
-            state.message = 'No existe camino al destino';
-            return;
-        }
 
         state.unvisited.delete(currentId);
         const currentNode = this.getNode(currentId);

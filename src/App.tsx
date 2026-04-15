@@ -145,7 +145,6 @@ function App() {
     if (simulationActive) {
       return
     }
-    setRandomM(Math.min(randomM, randomN*(randomN-1)/2))
     setRandomRequestNonce((prev) => prev + 1)
   }, [simulationActive])
 
