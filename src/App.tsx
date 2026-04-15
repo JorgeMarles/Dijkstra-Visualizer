@@ -145,7 +145,7 @@ function App() {
     if (simulationActive) {
       return
     }
-
+    setRandomM(Math.min(randomM, randomN*(randomN-1)/2))
     setRandomRequestNonce((prev) => prev + 1)
   }, [simulationActive])
 
@@ -265,7 +265,7 @@ function App() {
                   disabled={simulationActive}
                 />
 
-                <label htmlFor="random-m">Enlaces (m)</label>
+                <label htmlFor="random-m">Enlaces (m) (máximo n*(n-1)/2)</label>
                 <input
                   id="random-m"
                   type="number"

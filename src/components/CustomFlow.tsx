@@ -81,8 +81,7 @@ function CustomFlow({ onGraphChange, clearSignal, startRequest, stepSignal, rand
             const previousById = new Map(previousNodes.map((node) => [node.id, node]));
 
             const deg = 2*Math.PI / nodesInfo.length;
-            console.log(nodesInfo.length, deg)
-            const radius = 150;
+            const radius = nodesInfo.length * 14;
 
 
             return nodesInfo.map((nodeInfo, index) => {
