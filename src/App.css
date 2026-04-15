@@ -1,26 +1,447 @@
+
 .app {
-  width: min(1100px, 95vw);
-  margin: 0 auto;
+  height: 100dvh;
   display: grid;
-  gap: 1rem;
-  padding: 1.5rem 0;
+  grid-template-rows: auto 1fr;
+  gap: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background: #f8fafc;
+  overflow: hidden;
 }
 
-.app h1 {
+.app.is-resizing {
+  cursor: col-resize;
+  user-select: none;
+}
+
+.app h1,
+.app h2 {
+  color: #0f172a;
+}
+
+.app-header {
+  border-bottom: 1px solid #cbd5e1;
+  background: #9c9c9c;
+  padding: 0.75rem 1rem;
+  text-align: center;
+}
+
+.app-header h1 {
   margin: 0;
+  font-size: clamp(1.3rem, 2.2vw, 2rem);
+  letter-spacing: -0.02em;
 }
 
-.app p {
-  margin: 0.3rem 0 0;
-  color: #475569;
+.app-header p {
+  margin: 0.4rem 0 0;
+  color: #1f2b3c;
+}
+
+.app-content {
+  min-height: 0;
+  height: 100%;
+  display: flex;
+  align-items: stretch;
+  overflow: hidden;
 }
 
 .flow-wrapper {
-  width: 100%;
-  height: 70vh;
-  min-height: 420px;
-  border: 1px solid #cbd5e1;
-  border-radius: 12px;
+  flex: 1;
+  min-height: 0;
+  height: 100%;
   background: #ffffff;
   overflow: hidden;
+}
+
+.side-panel {
+  width: 320px;
+  min-width: 220px;
+  max-width: 60vw;
+  height: 100%;
+  min-height: 0;
+  resize: none;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: #d4d4d4;
+  padding: 1rem 1rem 0;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+.side-panel-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  padding-right: 0.25rem;
+}
+
+.side-panel-actions {
+  flex: 0 0 auto;
+  margin-top: 1rem;
+  padding: 0.75rem 0;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.side-panel-actions button {
+  border: 1px solid #cbd5e1;
+  background: #f8fafc;
+  color: #0f172a;
+  padding: 0.45rem 0.75rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.side-panel-actions button:hover {
+  background: #e2e8f0;
+}
+
+.side-panel-actions button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.side-panel-grip {
+  width: 10px;
+  cursor: col-resize;
+  background:
+    linear-gradient(to right, #cbd5e1 0, #cbd5e1 1px, transparent 1px, transparent 100%),
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 6px,
+      rgba(148, 163, 184, 0.6) 6px,
+      rgba(148, 163, 184, 0.6) 9px
+    );
+  background-position: left top, center;
+  background-size: 1px 100%, 2px 100%;
+  background-repeat: no-repeat;
+}
+
+.side-panel-grip:hover,
+.side-panel-grip.is-resizing {
+  background:
+    linear-gradient(to right, #94a3b8 0, #94a3b8 1px, transparent 1px, transparent 100%),
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 6px,
+      rgba(37, 99, 235, 0.65) 6px,
+      rgba(37, 99, 235, 0.65) 9px
+    );
+  background-position: left top, center;
+  background-size: 1px 100%, 2px 100%;
+  background-repeat: no-repeat;
+}
+
+.side-panel h2 {
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.side-panel p {
+  margin-top: 0.5rem;
+  color: #475569;
+}
+
+.side-panel-section {
+  margin-top: 1rem;
+}
+
+.side-panel-section h3 {
+  margin: 0 0 0.5rem;
+  font-size: 0.95rem;
+  color: #0f172a;
+}
+
+.side-panel-form-grid {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.side-panel-checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.82rem;
+  color: #0f172a;
+}
+
+.side-panel-form-grid label {
+  font-size: 0.8rem;
+  color: #334155;
+}
+
+.side-panel-form-grid select {
+  border: 1px solid #cbd5e1;
+  background: #fff;
+  color: #0f172a;
+  padding: 0.4rem 0.5rem;
+  border-radius: 6px;
+}
+
+.side-panel-form-grid input[type='number'] {
+  border: 1px solid #cbd5e1;
+  background: #fff;
+  color: #0f172a;
+  padding: 0.4rem 0.5rem;
+  border-radius: 6px;
+}
+
+.side-panel-status {
+  margin-top: 0.5rem;
+  padding: 0.45rem 0.55rem;
+  background: #eef2ff;
+  border: 1px solid #c7d2fe;
+  color: #1e3a8a;
+}
+
+.side-panel-kpi {
+  margin: 0;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.side-panel-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.4rem;
+}
+
+.side-panel-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.45rem 0.6rem;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+.side-panel-list li.is-visited {
+  border-color: #f59e0b;
+  background: #fef9c3;
+}
+
+.side-panel-list li.is-used {
+  border-color: #2563eb;
+  background: #dbeafe;
+}
+
+.side-panel-table-wrap {
+  overflow: auto;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+}
+
+.side-panel-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.side-panel-table th,
+.side-panel-table td {
+  padding: 0.4rem 0.45rem;
+  border-bottom: 1px solid #e2e8f0;
+  text-align: left;
+  color: #0f172a;
+}
+
+.side-panel-table thead th {
+  background: #f8fafc;
+  font-weight: 600;
+}
+
+.side-panel-table tbody tr.is-visited {
+  background: #fef9c3;
+}
+
+@media (max-width: 980px) {
+  .app {
+    height: 100dvh;
+  }
+
+  .app-content {
+    flex-direction: column;
+  }
+
+  .flow-wrapper {
+    border-top: 1px solid #cbd5e1;
+    min-height: 60dvh;
+  }
+
+  .side-panel {
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    min-height: 180px;
+  }
+
+  .side-panel-body {
+    padding-right: 0;
+  }
+
+  .side-panel-grip {
+    display: none;
+  }
+}
+
+/* hereda look default y solo personaliza */
+.react-flow__node.my-node {
+  display: grid;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  place-items: center;
+  color: black;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+
+.react-flow__node.my-node h2 {
+  margin: 0;
+  font-size: 1rem;
+  color: inherit;
+}
+
+/* opcional: estado seleccionado */
+.react-flow__node.my-node.selected {
+  box-shadow: 0 0 0 2px #2563eb;
+}
+
+.react-flow__node.my-node.node-theme-light {
+  background: #ffffff;
+  color: #0f172a;
+}
+
+.react-flow__node.my-node.node-theme-dark {
+  background: #0f172a;
+  border-color: #334155;
+  color: #f8fafc;
+}
+
+.react-flow__node.my-node.node-theme-contrast {
+  background: #fef08a;
+  border-color: #111827;
+  color: #111827;
+}
+
+.react-flow__edge.edge-theme-dark .react-flow__edge-path,
+.react-flow__edge.edge-theme-dark .react-flow__connection-path {
+  stroke: #e2e8f0;
+}
+
+.react-flow__edge.edge-theme-contrast .react-flow__edge-path,
+.react-flow__edge.edge-theme-contrast .react-flow__connection-path {
+  stroke: #111827;
+  stroke-width: 2.5;
+}
+
+.react-flow__edge-text {
+  fill: #0f172a;
+  font-weight: 600;
+}
+
+.flow-panel {
+  display: grid;
+  gap: 0.35rem;
+  min-width: 170px;
+  padding: 0.65rem;
+  border-radius: 10px;
+  border: 1px solid #cbd5e1;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 8px 20px rgba(2, 6, 23, 0.12);
+}
+
+.flow-panel label {
+  font-size: 0.8rem;
+  color: #334155;
+}
+
+.flow-panel select {
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 0.35rem 0.45rem;
+  background: #ffffff;
+  color: #0f172a;
+}
+
+.link-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.4);
+  display: grid;
+  place-items: center;
+  z-index: 1000;
+}
+
+.link-modal {
+  width: min(92vw, 360px);
+  padding: 1rem;
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid #cbd5e1;
+  box-shadow: 0 16px 40px rgba(2, 6, 23, 0.2);
+  display: grid;
+  gap: 0.75rem;
+  text-align: left;
+}
+
+.link-modal h3 {
+  margin: 0;
+  color: #0f172a;
+}
+
+.link-modal p {
+  margin: 0;
+  color: #334155;
+}
+
+.link-modal label {
+  color: #0f172a;
+  font-size: 0.95rem;
+}
+
+.link-modal input[type='number'] {
+  width: 100%;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 0.45rem 0.6rem;
+  box-sizing: border-box;
+}
+
+.link-modal-checkbox {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.link-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.link-modal-actions button {
+  border: 1px solid #94a3b8;
+  border-radius: 8px;
+  padding: 0.4rem 0.75rem;
+  background: #fff;
+  cursor: pointer;
+  color:#334155;
+}
+
+.link-modal-actions button:last-child {
+  border-color: #2563eb;
+  background: #2563eb;
+  color: #fff;
 }
