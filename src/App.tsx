@@ -5,7 +5,8 @@ import CustomFlow from './components/CustomFlow'
 import type { DijkstraRow, EdgeInfo, FrontierEdge, NodeInfo } from './service/Graph.ts'
 
 function App() {
-  const [panelWidth, setPanelWidth] = useState(320)
+  const initialWidth = 600;
+  const [panelWidth, setPanelWidth] = useState(initialWidth)
   const [isResizing, setIsResizing] = useState(false)
   const [nodesInfo, setNodesInfo] = useState<NodeInfo[]>([])
   const [edgesInfo, setEdgesInfo] = useState<EdgeInfo[]>([])
@@ -30,7 +31,7 @@ function App() {
   const [sourceToAllMode, setSourceToAllMode] = useState(false)
   const [autoStep, setAutoStep] = useState(false)
   const startXRef = useRef(0)
-  const startWidthRef = useRef(320)
+  const startWidthRef = useRef(initialWidth)
 
   const onStartResize = useCallback((event: React.MouseEvent<HTMLDivElement>) => {
     event.preventDefault()
@@ -200,6 +201,12 @@ function App() {
         <aside className="side-panel" aria-label="Panel lateral" style={{ width: `${panelWidth}px` }}>
           <h2>Panel</h2>
           <div className="side-panel-body">
+            <div className="side-panel-section">
+              <h2>Controles</h2>
+              <p>                Doble click en un espacio vacío para poner un nuevo Nodo.</p>
+              <p>                Arrastra entre 2 nodos para crear un enlace.              </p>
+              <p>                Click derecho sobre un nodo o enlace para eliminarlo              </p>
+            </div>
             <div className="side-panel-section">
               <p className="side-panel-kpi">Nodos: {nodesInfo.length}</p>
               <p className="side-panel-kpi">Enlaces: {edgesInfo.length}</p>
