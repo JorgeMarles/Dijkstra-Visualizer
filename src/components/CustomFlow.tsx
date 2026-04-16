@@ -14,7 +14,7 @@ import {
     ConnectionMode,
     type ReactFlowInstance,
 } from '@xyflow/react';
-import { Background, Controls } from '@xyflow/react';
+import { Background, Controls, Panel } from '@xyflow/react';
 import CustomNode from './CustomNode';
 import CenteredEdge from './CenteredEdge';
 import { Graph, type DijkstraRow, type EdgeInfo, type FrontierEdge, type NodeInfo } from '../service/Graph.ts';
@@ -461,6 +461,25 @@ function CustomFlow({ onGraphChange, clearSignal, startRequest, stepSignal, rand
             >
                 <Background />
                 <Controls />
+                <Panel position="top-right" style={{ background: 'white', padding: '10px', borderRadius: '5px', boxShadow: '0 0 10px rgba(0,0,0,0.1)', fontSize: '12px' }}>
+                    <h4 style={{ margin: '0 0 10px 0', fontSize: '14px' }}>Convenciones</h4>
+                    <div style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
+                        <div style={{ width: '16px', height: '16px', border: '1px solid #1a192b', borderRadius: '50%', marginRight: '8px', background: 'white' }}></div>
+                        <span>Nodo normal: marca temporal</span>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
+                        <div style={{ width: '16px', height: '16px', border: '1px solid #f59e0b', borderRadius: '50%', marginRight: '8px', background: '#fef9c3' }}></div>
+                        <span>Nodo amarillo: marca permanente</span>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
+                        <div style={{ width: '16px', height: '2px', background: '#334155', marginRight: '8px' }}></div>
+                        <span>Arista negra: no usada</span>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <div style={{ width: '16px', height: '2px', background: '#2563eb', marginRight: '8px' }}></div>
+                        <span>Arista azul: ruta mínima</span>
+                    </div>
+                </Panel>
             </ReactFlow>
 
             {pendingConnection && (
